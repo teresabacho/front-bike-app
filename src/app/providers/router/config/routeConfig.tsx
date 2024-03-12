@@ -49,7 +49,6 @@ import CheckoutPage from '@/pages/PaymentPage/ui/CheckoutPage';
 import { AdminTrainerApprovalPage } from '@/pages/AdminTrainerApprovalPage/ui/AdminTrainerApprovalPage';
 import { TrainerApplicationsPage } from '@/pages/TrainerApprovalPage/ui/trainerApprovalPage';
 import { AdminReportsPage } from '@/pages/AdminReportsPage/AdminReportsPage';
-import MyBikes from '@/pages/MyBikes/MyBikes';
 
 export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.MAIN]: {
@@ -162,7 +161,6 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
     },
     [AppRoutes.MY_BIKES]: {
         path: getMyBikes(),
-        element: <MyBikes />,
     }
 
 
