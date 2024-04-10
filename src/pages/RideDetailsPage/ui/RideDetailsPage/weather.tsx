@@ -28,7 +28,7 @@ export const WeatherWidget = ({ date, location, setWeatherDataForGpt }) => {
                 );
 
                 if (!response.ok) {
-                    throw new Error('Failed to fetch weather data');
+                    throw new Error('Не вдалось синхронізувати погоду');
                 }
 
                 const data = await response.json();
@@ -36,7 +36,7 @@ export const WeatherWidget = ({ date, location, setWeatherDataForGpt }) => {
                 setWeatherDataForGpt(data);
                 setLoading(false);
             } catch (err) {
-                console.error('Error fetching weather:', err);
+                console.error('Не вдалось синхронізувати погоду:', err);
                 setError('Не вдалося завантажити прогноз погоди');
                 setLoading(false);
             }

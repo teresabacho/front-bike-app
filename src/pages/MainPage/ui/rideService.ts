@@ -5,6 +5,7 @@ import { $api } from '@/shared/api/api';
  * @param {string} timePeriod - Період часу ('all' або 'month')
  * @returns {Promise<Array>} - Масив поїздок
  */
+
 export const getAllRides = async (timePeriod = 'all') => {
     try {
         const params = {};

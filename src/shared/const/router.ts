@@ -24,6 +24,7 @@ export enum AppRoutes {
 ADMIN_TRAINER_APPROVAL = 'admin_trainer_approval',
 TRAINER_APPROVAL = 'trainer_approval',
 ADMIN_REPORTS= 'admin_reports',
+MY_BIKES= 'my_bikes',
 }
 
 export const getRouteMain = () => '/';
@@ -50,6 +51,7 @@ export const getPayments= (id:string) => `/payments`;
 export const getAdminApprovals= () => `/admin/trainer-approval`;
 export const getTrainerApprovals= () => `/trainer/ride-approvals`;
 export const getAdminReports= () => `/admin/reports`;
+export const getMyBikes= () => `/my-bikes`;
 
 export const AppRouteByPathPattern: Record<string, AppRoutes> = {
     [getRouteMain()]: AppRoutes.MAIN,
@@ -76,5 +78,5 @@ export const AppRouteByPathPattern: Record<string, AppRoutes> = {
     [getAdminApprovals()]: AppRoutes.ADMIN_TRAINER_APPROVAL,
     [getTrainerApprovals()]: AppRoutes.TRAINER_APPROVAL,
     [getAdminReports()]: AppRoutes.ADMIN_REPORTS,
-
+    [getMyBikes()]: AppRoutes.MY_BIKES,
 };

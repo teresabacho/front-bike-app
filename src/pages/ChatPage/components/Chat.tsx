@@ -115,7 +115,7 @@ const Chat = (props:{isUserToUser?:boolean}) => {
               <Input
                   type="text"
                   name="message"
-                  placeholder="What do you want to say?"
+                  placeholder="Повідомлення"
                   value={message}
                   onChange={handleChange}
                   autoComplete="off"
@@ -123,7 +123,7 @@ const Chat = (props:{isUserToUser?:boolean}) => {
               />
             </div>
             <div className={styles.button}>
-              <Input type="submit" onSubmit={handleSubmit} value="Send a message" />
+              <Input type="submit" onSubmit={handleSubmit} value="Надіслати" />
             </div>
           </form>
         </div>

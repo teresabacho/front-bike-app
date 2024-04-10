@@ -23,7 +23,7 @@ export const ArticleInfiniteList = memo((props: ArticleInfiniteListProps) => {
     const { t } = useTranslation();
 
     if (error) {
-        return <Text text={t('Ошибка при загрузке статей')} />;
+        return <Text text={t('Помилка')} />;
     }
 
     return (

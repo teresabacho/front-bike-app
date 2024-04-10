@@ -18,6 +18,7 @@ interface RideApplication {
     id: string;
     user_id: string;
     ride_id: string;
+    bicycle_id: string;
     status: 'pending' | 'approved' | 'rejected';
     message?: string;
     trainer_notes?: string;
@@ -28,11 +29,22 @@ interface RideApplication {
         first: string;
         lastname: string;
         avatar?: string;
+        role?: string;
     };
     ride: {
         id: string;
         title: string;
         date: string;
+        distance?: number;
+        duration?: number;
+    };
+    bicycle: {
+        id: string;
+        name: string;
+        type: string;
+        brand: string;
+        model: string;
+        color: string;
     };
     userStats: {
         totalRides: number;
@@ -43,8 +55,12 @@ interface RideApplication {
         totalDuration: number;
         avgDuration: number;
         level: number;
-        experience: number;
-        experienceCategory: string;
+        experience?: number;
+        experienceCategory?: string;
+        joinedDistance?: number;
+        joinedDuration?: number;
+        createdDistance?: number;
+        createdDuration?: number;
     };
 }
 
@@ -125,6 +141,28 @@ export const TrainerApplicationsPage = () => {
         );
     };
 
+    const getBicycleTypeText = (type: string) => {
+        const types: Record<string, string> = {
+            bmx: 'BMX',
+            mountain: 'Гірський',
+            road: 'Шосейний',
+            hybrid: 'Гібрідний',
+            electric: 'Електричний',
+            touring: 'Туристичний',
+            gravel: 'Гравійний',
+        };
+        return types[type] || type;
+    };
+
+    const formatDuration = (seconds: number) => {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        if (hours > 0) {
+            return `${hours}г ${minutes}хв`;
+        }
+        return `${minutes}хв`;
+    };
+
     const pendingApplications = applications.filter(app => app?.status === 'pending');
     const processedApplications = applications.filter(app => app?.status !== 'pending');
 
@@ -169,6 +207,35 @@ export const TrainerApplicationsPage = () => {
                                                     size="s"
                                                 />
 
+                                                {/* Інформація про велосипед */}
+                                                {application?.bicycle && (
+                                                    <Card padding="8" variant="light" style={{ backgroundColor: '#e0f2fe' }}>
+                                                        <VStack gap="2">
+                                                            <Text
+                                                                text={`🚴 Велосипед: ${application.bicycle.name}`}
+                                                                size="s"
+                                                                weight="bold"
+                                                            />
+                                                            <HStack gap="12">
+                                                                <Text
+                                                                    text={`${getBicycleTypeText(application.bicycle.type)}`}
+                                                                    size="s"
+                                                                    style={{ color: '#0277bd' }}
+                                                                />
+                                                                <Text
+                                                                    text={`${application.bicycle.brand }   ${application.bicycle.model}`}
+                                                                    size="s"
+                                                                />
+                                                                <Text
+                                                                    text={application.bicycle.color }
+                                                                    size="s"
+                                                                    style={{ color: '#424242' }}
+                                                                />
+                                                            </HStack>
+                                                        </VStack>
+                                                    </Card>
+                                                )}
+
                                                 {/* Статистика користувача */}
                                                 <Card padding="8" variant="light"
                                                       style={{ backgroundColor: '#f8f9fa' }}>
@@ -186,6 +253,11 @@ export const TrainerApplicationsPage = () => {
                                                                 text={`Сер.: ${Math.round((application?.userStats?.avgDistance || 0) / 1000)} км`}
                                                                 size="s"
                                                             />
+                                                            <Text
+                                                                text={`Рівень: ${application?.userStats?.level || 0}`}
+                                                                size="s"
+                                                                style={{ color: '#7c3aed' }}
+                                                            />
                                                         </HStack>
                                                         <HStack gap="16">
                                                             <Text
@@ -198,6 +270,13 @@ export const TrainerApplicationsPage = () => {
                                                                 size="s"
                                                                 style={{ color: '#dc2626' }}
                                                             />
+                                                            {application?.userStats?.totalDuration && (
+                                                                <Text
+                                                                    text={`Загальний час: ${formatDuration(application.userStats.totalDuration)}`}
+                                                                    size="s"
+                                                                    style={{ color: '#6366f1' }}
+                                                                />
+                                                            )}
                                                         </HStack>
                                                     </VStack>
                                                 </Card>
@@ -253,6 +332,22 @@ export const TrainerApplicationsPage = () => {
                                                     size="s"
                                                 />
 
+                                                {/* Компактна інформація про велосипед */}
+                                                {application?.bicycle && (
+                                                    <HStack gap="8">
+                                                        <Text
+                                                            text={`🚴 ${application.bicycle.name}`}
+                                                            size="xs"
+                                                            style={{ color: '#0277bd' }}
+                                                        />
+                                                        <Text
+                                                            text={`${getBicycleTypeText(application.bicycle.type)}`}
+                                                            size="xs"
+                                                            style={{ color: '#6b7280' }}
+                                                        />
+                                                    </HStack>
+                                                )}
+
                                                 {/* Компактна статистика для оброблених заявок */}
                                                 <HStack gap="8">
                                                     <Text
@@ -264,6 +359,11 @@ export const TrainerApplicationsPage = () => {
                                                         text={`${Math.round((application?.userStats?.totalDistance || 0) / 1000)} км`}
                                                         size="xs"
                                                         style={{ color: '#6b7280' }}
+                                                    />
+                                                    <Text
+                                                        text={`Рівень: ${application?.userStats?.level || 0}`}
+                                                        size="xs"
+                                                        style={{ color: '#7c3aed' }}
                                                     />
                                                 </HStack>
                                             </VStack>
@@ -310,6 +410,31 @@ export const TrainerApplicationsPage = () => {
                                 <Text
                                     text={`Поїздка: ${selectedApplication?.ride?.title || 'Невідома поїздка'}`}
                                 />
+
+                                {/* Інформація про велосипед в модальному вікні */}
+                                {selectedApplication?.bicycle && (
+                                    <Card padding="12" variant="light" style={{ backgroundColor: '#e0f2fe' }}>
+                                        <VStack gap="4">
+                                            <Text
+                                                text={`Велосипед: ${selectedApplication.bicycle.name}`}
+                                                weight="bold"
+                                            />
+                                            <HStack gap="12">
+                                                <Text
+                                                    text={getBicycleTypeText(selectedApplication.bicycle.type)}
+                                                    style={{ color: '#0277bd' }}
+                                                />
+                                                <Text
+                                                    text={`${selectedApplication.bicycle.brand} ${selectedApplication.bicycle.model}`}
+                                                />
+                                                <Text
+                                                    text={selectedApplication.bicycle.color}
+                                                    style={{ color: '#424242' }}
+                                                />
+                                            </HStack>
+                                        </VStack>
+                                    </Card>
+                                )}
 
                                 {selectedApplication?.message && (
                                     <VStack gap="4" max>

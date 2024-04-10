@@ -185,7 +185,6 @@ export const CreateRoad = () => {
     return (
         <DynamicModuleLoader removeAfterUnmount reducers={initialReducers}>
             <div>
-                {/* eslint-disable-next-line i18next/no-literal-string */}
                 <LoadScript libraries={places} googleMapsApiKey='AIzaSyCAQVTz4ovEKsi1PguWdsz3PjPTqXGy4LI'>
                     <VStack justify="center" align="center" gap="32" max>
                         <VStack max justify="center" align="center" gap="32" >
@@ -241,7 +240,7 @@ export const CreateRoad = () => {
 
                             </HStack>
                             <HStack max>
-                                <Text text="Ведіть назву" />
+                                <Text text="Введіть назву" />
                                 <Input key="stepan" value={createRoadData?.title} onChange={(e) =>
                                     dispatch(createRoadActions.setTitle(e))
                                 }/>

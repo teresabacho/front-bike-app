@@ -1,11 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { memo } from 'react';
 import { classNames } from '@/shared/lib/classNames/classNames';
-import { Text as TextDeprecated } from '@/shared/ui/deprecated/Text';
 import { Text } from '@/shared/ui/redesigned/Text';
 import cls from './ArticleTextBlockComponent.module.scss';
 import { ArticleTextBlock } from '../../model/types/article';
-import { ToggleFeatures } from '@/shared/lib/features';
 
 interface ArticleTextBlockComponentProps {
     className?: string;

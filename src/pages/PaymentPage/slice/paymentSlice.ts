@@ -1,4 +1,3 @@
-// paymentSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 import { userSlice } from '@/entities/User/model/slice/userSlice';
 

@@ -123,7 +123,7 @@ const RegistrationForm = memo(({ className, onSuccess }: RegisterFormProps) => {
                     autofocus
                     type="text"
                     className={cls.input}
-                    placeholder={t('Ведіть username')}
+                    placeholder={t('Введіть username')}
                     onChange={onChangeUsername}
                     value={username}
                 />
@@ -131,14 +131,14 @@ const RegistrationForm = memo(({ className, onSuccess }: RegisterFormProps) => {
                     autofocus
                     type="text"
                     className={cls.input}
-                    placeholder={t('Ведіть email')}
+                    placeholder={t('Введіть email')}
                     onChange={onChangeEmail}
                     value={email}
                 />
                 <Input
                     type="text"
                     className={cls.input}
-                    placeholder={t('Ведіть пароль')}
+                    placeholder={t('Введіть пароль')}
                     onChange={onChangePassword}
                     value={password}
                 />
@@ -151,7 +151,6 @@ const RegistrationForm = memo(({ className, onSuccess }: RegisterFormProps) => {
                     />
                 </HStack>
 
-                {/* Show file upload only when trainer role is selected */}
                 {role === 'trainer' && (
                     <VStack gap="8">
                         <Text size='s' title={'Завантажте документ кваліфікації'} />

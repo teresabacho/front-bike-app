@@ -6,5 +6,4 @@ export type Road = {
     startMark: Location
     waypoints: Array<Location>
     direction: google.maps.DirectionsResult | null
-
 }

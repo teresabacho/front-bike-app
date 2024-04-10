@@ -24,6 +24,7 @@ import { Input } from '@/shared/ui/redesigned/Input';
 import { Modal } from '@/shared/ui/redesigned/Modal';
 import { rideApplicationReducer } from '@/pages/TrainerApprovalPage/services/rideApplicationService';
 import { applyToRide, fetchApplicationStatus } from '@/pages/RideDetailsPage/model/services/applyToRide';
+import { BicycleSelector } from '@/pages/MyBikes/MyBikes';
 
 const createGoogleCalendarUrl = (ride) => {
     if (!ride || !ride.date) return '';
@@ -102,6 +103,7 @@ export const RideDetailsPage = memo(() => {
     const [weatherData, setWeatherData] = useState(null);
     const [showApplicationModal, setShowApplicationModal] = useState(false);
     const [applicationMessage, setApplicationMessage] = useState('');
+    const [selectedBicycleId, setSelectedBicycleId] = useState<string | null>(null);
 
     useEffect(() => {
         if (id) {
@@ -192,10 +194,16 @@ export const RideDetailsPage = memo(() => {
 
         dispatch(applyToRide({
             rideId: id,
-            message: applicationMessage
+            message: applicationMessage,
+            bicycle_id: selectedBicycleId
         }));
+
         setShowApplicationModal(false);
         setApplicationMessage('');
+        setSelectedBicycleId(null);
+
+        dispatch(fetchRideData(id));
+        dispatch(fetchApplicationStatus(id));
     };
 
     const getJoinButtonText = () => {
@@ -253,7 +261,6 @@ export const RideDetailsPage = memo(() => {
                     </LoadScript>
 
                     <VStack align="center" max gap="16">
-                        {/* Відображення статусу заявки */}
                         <ApplicationStatus status={applicationStatus} />
 
                         <HStack justify="center" gap="8" max>
@@ -338,20 +345,40 @@ export const RideDetailsPage = memo(() => {
 
                 <Modal
                     isOpen={showApplicationModal}
-                    onClose={() => setShowApplicationModal(false)}
+                    onClose={() => {
+                        setShowApplicationModal(false);
+                        setApplicationMessage('');
+                        setSelectedBicycleId(null);
+                    }}
                 >
                     <VStack gap="16" max>
                         <Text title="Подання заявки на поїздку" />
-                        <Text text="Ця поїздка створена тренером. Напишіть коротке повідомлення про ваш досвід та мотивацію:" />
-                        <Input
-                            value={applicationMessage}
-                            onChange={setApplicationMessage}
-                            placeholder="Розкажіть про свій досвід..."
-                            multiline
-                            rows={4}
+                        <Text text="Ця поїздка створена тренером. Заповніть форму для подачі заявки:" />
+
+                        <BicycleSelector
+                            selectedBicycleId={selectedBicycleId}
+                            onBicycleSelect={setSelectedBicycleId}
                         />
+
+                        <VStack gap="4" max>
+                            <Text text="Повідомлення тренеру (необов'язково):" />
+                            <textarea
+                                value={applicationMessage}
+                                onChange={(e) => setApplicationMessage(e.target.value)}
+                                placeholder="Розкажіть про свій досвід, мотивацію та готовність до поїздки..."
+                                className="w-full p-3 border rounded h-24 resize-none"
+                            />
+                        </VStack>
+
                         <HStack gap="8" justify="end" max>
-                            <Button onClick={() => setShowApplicationModal(false)}>
+                            <Button
+                                onClick={() => {
+                                    setShowApplicationModal(false);
+                                    setApplicationMessage('');
+                                    setSelectedBicycleId(null);
+                                }}
+                                variant="outline"
+                            >
                                 Скасувати
                             </Button>
                             <Button onClick={handleSubmitApplication}>

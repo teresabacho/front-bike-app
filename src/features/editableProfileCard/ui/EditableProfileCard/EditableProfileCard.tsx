@@ -48,7 +48,7 @@ export const EditableProfileCard = memo((props: EditableProfileCardProps) => {
 
     const validateErrorTranslates = {
         [ValidateProfileError.SERVER_ERROR]: t(
-            'Серверная ошибка при сохранении',
+            'Server error',
         )
     };
 

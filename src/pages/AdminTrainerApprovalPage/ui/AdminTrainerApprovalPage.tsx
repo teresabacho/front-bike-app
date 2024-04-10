@@ -1,14 +1,12 @@
-// In src/pages/AdminTrainerApprovalPage/ui/AdminTrainerApprovalPage.tsx
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
-import { classNames } from '@/shared/lib/classNames/classNames';
 import { Text } from '@/shared/ui/redesigned/Text';
 import { HStack, VStack } from '@/shared/ui/redesigned/Stack';
 import { Button } from '@/shared/ui/redesigned/Button';
 import { Input } from '@/shared/ui/redesigned/Input';
 import { Card } from '@/shared/ui/redesigned/Card';
 import { Page } from '@/widgets/Page';
-import { $api } from '@/shared/api/api'; // Import your axios instance
+import { $api } from '@/shared/api/api';
 
 interface TrainerRequest {
     id: number;
@@ -54,7 +52,6 @@ export const AdminTrainerApprovalPage = () => {
             await $api.post(`/admin/approve-trainer/${userId}`, {
                 notes: notes[userId] || ''
             });
-            // Refresh the list
             fetchPendingTrainers();
         } catch (error) {
             setError(error?.response?.data?.message || error?.message || 'Failed to approve trainer');
@@ -120,7 +117,7 @@ export const AdminTrainerApprovalPage = () => {
                                     )}
                                     <Input
                                         placeholder={t(
-                                            'Add approval/rejection notes',
+                                            'Додати коментарі/причини',
                                         )}
                                         value={notes[trainer.id] || ''}
                                         onChange={(value) =>

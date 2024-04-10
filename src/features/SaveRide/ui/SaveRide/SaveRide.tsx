@@ -111,7 +111,7 @@ const SaveRide = () => {
                     {
                        ( (localStorage.getItem('role') === 'trainer' && localStorage.getItem('isApproved') === 'true'  ) || localStorage.getItem('role') === 'admin') &&
                         <HStack gap="8">
-                            <Text text="Платний" />
+                            <Text text="Платна поїздка" />
                             <input type={'checkbox'} onChange={()=>{
                                 setIsPaid(!isPaid)
                             }}/>

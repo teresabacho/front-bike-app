@@ -4,7 +4,6 @@ import { Text } from '@/shared/ui/redesigned/Text';
 import { Skeleton as SkeletonRedesigned } from '@/shared/ui/redesigned/Skeleton';
 import { HStack, VStack } from '@/shared/ui/redesigned/Stack';
 import { Button } from '@/shared/ui/redesigned/Button';
-import { Icon } from '@/shared/ui/redesigned/Icon';
 import cls from './CommentCard.module.scss';
 import { Comment } from '../../model/types/comment';
 import { getRouteProfile } from '@/shared/const/router';

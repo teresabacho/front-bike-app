@@ -31,7 +31,7 @@ import {
     getRouteRideDetails,
     getRouteMyProfile,
     getPayments,
-    getAdminApprovals, getTrainerApprovals, getAdminReports,
+    getAdminApprovals, getTrainerApprovals, getAdminReports, getMyBikes,
 } from '@/shared/const/router';
 import { AppRoutesProps } from '@/shared/types/router';
 import { SettingsPage } from '@/pages/SettingsPage';
@@ -45,11 +45,11 @@ import { UserDetailsPage } from '@/pages/UserDetailsPage';
 import { RideDetailsPage } from '@/pages/RideDetailsPage';
 import { MyProfilePage } from '@/pages/MyPage';
 import { CreateArticle } from '@/pages/ArticleCreatePage';
-import CheckoutForm from '@/pages/PaymentPage/ui/CheckoutForm';
 import CheckoutPage from '@/pages/PaymentPage/ui/CheckoutPage';
 import { AdminTrainerApprovalPage } from '@/pages/AdminTrainerApprovalPage/ui/AdminTrainerApprovalPage';
 import { TrainerApplicationsPage } from '@/pages/TrainerApprovalPage/ui/trainerApprovalPage';
 import { AdminReportsPage } from '@/pages/AdminReportsPage/AdminReportsPage';
+import MyBikes from '@/pages/MyBikes/MyBikes';
 
 export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.MAIN]: {
@@ -159,6 +159,10 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.ADMIN_REPORTS]: {
         path: getAdminReports(),
         element: <AdminReportsPage />,
+    },
+    [AppRoutes.MY_BIKES]: {
+        path: getMyBikes(),
+        element: <MyBikes />,
     }
 
 
