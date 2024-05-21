@@ -29,7 +29,7 @@ const UserPage = () => {
     return(
         <DynamicModuleLoader removeAfterUnmount reducers={initialReducers}>
             <div>
-                {!users?.length ? users?.map((user) => {
+                {users?.length ? users?.map((user) => {
                     return <UserListItem buttonTitle="Почати чат" to={`/users/${user?.id}/chat`} view={ArticleView.BIG} user={user} key={user.id} />
                 }): <VStack justify="center" align="center" gap="32" max>
                     <Text text="У вас ще немає жодного чату, але можна найти товариша у пошуку" />
