@@ -1,0 +1,330 @@
+/* CheckoutPage.scss */
+
+$primary-color: #3f51b5;
+$secondary-color: #6b7c93;
+$success-color: #4caf50;
+$text-color: #32325d;
+$light-gray: #f7fafc;
+$medium-gray: #edf2f7;
+$border-color: #e2e8f0;
+$white: #ffffff;
+
+.checkout-page {
+  min-height: 100vh;
+  background-color: $light-gray;
+  padding: 48px 24px;
+
+  .checkout-container {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .steps-container {
+    margin-bottom: 32px;
+
+    .steps-list {
+      display: flex;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      .step-item {
+        flex: 1;
+        position: relative;
+        display: flex;
+        align-items: center;
+        color: $secondary-color;
+
+        &:last-child {
+          .step-divider {
+            display: none;
+          }
+        }
+
+        &.active {
+          color: $primary-color;
+
+          .step-number {
+            background-color: lighten($primary-color, 30%);
+            color: $primary-color;
+          }
+        }
+
+        &.completed {
+          color: $primary-color;
+
+          .step-number {
+            background-color: $primary-color;
+            color: $white;
+          }
+
+          .step-divider {
+            background-color: $primary-color;
+          }
+        }
+
+        .step-number {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          background-color: $medium-gray;
+          color: $secondary-color;
+          font-weight: 600;
+          margin-right: 8px;
+        }
+
+        .step-text {
+          font-size: 14px;
+          font-weight: 500;
+        }
+
+        .step-divider {
+          position: absolute;
+          right: 0;
+          width: calc(100% - 48px);
+          height: 2px;
+          background-color: $medium-gray;
+          top: 16px;
+          z-index: -1;
+        }
+      }
+    }
+  }
+
+  .checkout-content {
+    background-color: $white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+
+    .checkout-inner {
+      padding: 24px;
+
+      .checkout-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: $text-color;
+        margin-bottom: 24px;
+      }
+
+      .checkout-form {
+        .form-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 16px;
+
+          @media (min-width: 768px) {
+            grid-template-columns: 1fr 1fr;
+          }
+
+          .form-group {
+            &.form-group-full {
+              @media (min-width: 768px) {
+                grid-column: span 2;
+              }
+            }
+
+            .form-label {
+              display: block;
+              font-size: 14px;
+              font-weight: 500;
+              color: $text-color;
+              margin-bottom: 8px;
+            }
+
+            .form-input {
+              width: 100%;
+              padding: 10px 12px;
+              border: 1px solid $border-color;
+              border-radius: 4px;
+              font-size: 16px;
+              color: $text-color;
+
+              &:focus {
+                outline: none;
+                border-color: $primary-color;
+                box-shadow: 0 0 0 2px lighten($primary-color, 35%);
+              }
+            }
+          }
+        }
+
+        .form-footer {
+          margin-top: 24px;
+          padding-top: 16px;
+          border-top: 1px solid $border-color;
+
+          .submit-button {
+            padding: 12px 24px;
+            background-color: $primary-color;
+            color: $white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+
+            &:hover {
+              background-color: darken($primary-color, 5%);
+            }
+          }
+        }
+      }
+
+      .payment-step {
+        .payment-total {
+          margin-bottom: 24px;
+
+          .payment-total-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: $text-color;
+            margin-bottom: 8px;
+          }
+
+          .payment-total-amount {
+            font-size: 32px;
+            font-weight: 600;
+            color: $text-color;
+          }
+
+          .payment-total-tax {
+            font-size: 14px;
+            color: $secondary-color;
+            margin-top: 4px;
+          }
+        }
+
+        .back-link-container {
+          margin-top: 16px;
+          text-align: center;
+
+          .back-link {
+            background: none;
+            border: none;
+            font-size: 14px;
+            color: $secondary-color;
+            cursor: pointer;
+
+            &:hover {
+              color: $text-color;
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+
+      .success-step {
+        text-align: center;
+        padding: 24px 0;
+
+        .success-icon {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 64px;
+          height: 64px;
+          background-color: lighten($success-color, 45%);
+          border-radius: 50%;
+          margin-bottom: 16px;
+        }
+
+        .success-title {
+          font-size: 24px;
+          font-weight: 600;
+          color: $text-color;
+          margin-bottom: 8px;
+        }
+
+        .success-message {
+          color: $secondary-color;
+          margin-bottom: 24px;
+          max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .order-details {
+          background-color: $light-gray;
+          padding: 16px;
+          border-radius: 4px;
+          text-align: left;
+          margin-bottom: 24px;
+          max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+
+          .order-details-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: $text-color;
+            margin-bottom: 8px;
+          }
+
+          .order-details-info {
+            font-size: 14px;
+            color: $secondary-color;
+
+            p {
+              margin: 4px 0;
+
+              .info-label {
+                font-weight: 500;
+              }
+            }
+          }
+        }
+
+        .home-button {
+          padding: 12px 24px;
+          background-color: $primary-color;
+          color: $white;
+          border: none;
+          border-radius: 4px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: background-color 0.2s ease;
+
+          &:hover {
+            background-color: darken($primary-color, 5%);
+          }
+        }
+      }
+    }
+  }
+
+  .test-cards-container {
+    margin-top: 24px;
+    background-color: $white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    .test-cards-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: $text-color;
+      margin-bottom: 8px;
+    }
+
+    .test-cards-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 12px;
+      color: $secondary-color;
+
+      li {
+        margin-bottom: 4px;
+
+        .card-number {
+          font-family: monospace;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
