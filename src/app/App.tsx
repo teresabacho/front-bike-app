@@ -1,5 +1,6 @@
 import React, { memo, Suspense, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { loadStripe } from '@stripe/stripe-js';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import { getUserInited, initAuthData } from '@/entities/User';
 import { AppRouter } from './providers/router';
@@ -13,7 +14,9 @@ import { AppLoaderLayout } from '@/shared/layouts/AppLoaderLayout';
 import { PageLoader } from '@/widgets/PageLoader';
 import { useAppToolbar } from './lib/useAppToolbar';
 import { withTheme } from './providers/ThemeProvider/ui/withTheme';
+import { Elements } from '@stripe/react-stripe-js';
 
+const stripePromise = loadStripe('');
 const App = memo(() => {
     const { theme } = useTheme();
     const dispatch = useAppDispatch();
@@ -32,7 +35,10 @@ const App = memo(() => {
                                     id="app"
                                     className={classNames('app_redesigned', {}, [theme])}
                                 >
-                                    <AppLoaderLayout />{' '}
+                <Elements stripe={stripePromise}>
+
+                <AppLoaderLayout />{' '}
+                </Elements>
                                 </div>
         );
     }
@@ -42,6 +48,7 @@ const App = memo(() => {
                             id="app"
                             className={classNames('app_redesigned', {}, [theme])}
                         >
+            <Elements stripe={stripePromise}>
                             <Suspense fallback="">
                                 <MainLayout
                                     header={<Navbar />}
@@ -50,7 +57,9 @@ const App = memo(() => {
                                     toolbar={toolbar}
                                 />
                             </Suspense>
-                        </div>
+            </Elements>
+
+        </div>
     );
 });
 
