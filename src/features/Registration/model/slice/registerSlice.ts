@@ -6,7 +6,8 @@ const initialState: RegisterSchema = {
     isLoading: false,
     username: '',
     password: '',
-    email: ''
+    email: '',
+    role: '',
 };
 
 export const registerSlice = createSlice({
@@ -21,6 +22,11 @@ export const registerSlice = createSlice({
         },
         setPassword: (state, action: PayloadAction<string>) => {
             state.password = action.payload;
+        },
+        setRole: (state, action: PayloadAction<string>) => {
+            console.log('hello');
+            console.log(action.payload);
+            state.role = action.payload;
         },
     },
     extraReducers: (builder) => {

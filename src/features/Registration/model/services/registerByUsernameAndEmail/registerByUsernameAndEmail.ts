@@ -6,24 +6,27 @@ interface RegisterByUsernameAndEmailProps {
     username: string;
     email:string;
     password: string;
+    role:string
 }
 
-export const registerByUsernameAndEmail = createAsyncThunk<
-    User,
-    RegisterByUsernameAndEmailProps,
-    ThunkConfig<string>
->('register/registerByUsername', async (authData, thunkApi) => {
-    const { extra, dispatch, rejectWithValue } = thunkApi;
+export const registerByUsernameAndEmail = createAsyncThunk('register/registerByUsernameAndEmail', async (formData, thunkApi) => {
+    const { extra, rejectWithValue } = thunkApi;
 
     try {
-        const response = await extra.api.post<User>('/auth/registration', authData);
+        // Using FormData, not sending JSON
+        const response = await extra.api.post('/auth/registration', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
 
-        if (response.status !==204) {
+        if (response.status !==200) {
             throw new Error();
         }
 
         return response.data;
     } catch (e) {
+        console.log(e);
         return rejectWithValue('error');
     }
 });

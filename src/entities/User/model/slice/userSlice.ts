@@ -20,6 +20,7 @@ export const userSlice = createSlice({
         setAuthData: (state, { payload }: PayloadAction<User>) => {
             state.authData = payload;
             localStorage.setItem(USER_LOCALSTORAGE_KEY, payload.id);
+            localStorage.setItem('role', payload.role);
             localStorage.setItem(
                 LOCAL_STORAGE_LAST_DESIGN_KEY,
                 payload.features?.isAppRedesigned ? 'new' : 'old',

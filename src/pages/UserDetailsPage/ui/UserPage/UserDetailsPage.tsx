@@ -44,9 +44,7 @@ export const UserDetails = memo(() => {
             dispatch(fetchPosts(id));
         }
     },[id,dispatch]);
-
     return (
-
         <DynamicModuleLoader removeAfterUnmount reducers={initialReducers}>
             <Card
                 padding="24"
@@ -59,72 +57,108 @@ export const UserDetails = memo(() => {
                 <VStack justify="center" align="center" gap="8" max>
                     <AppImage
                         fallback={<Skeleton width="100%" height={250} />}
-                        src={user?.avatar || "https://www.hundeo.com/wp-content/uploads/2019/05/Shiba-Inu-Profilbild.jpg"}
+                        src={
+                            user?.avatar ||
+                            'https://www.hundeo.com/wp-content/uploads/2019/05/Shiba-Inu-Profilbild.jpg'
+                        }
                         className={cls.img}
                         alt={user?.lastname || ''}
                     />
                     <VStack align="center" max gap="16">
                         <HStack justify="center" gap="8" max>
-                            <Text text={user?.username || 'інформація не вказана'} />
+                            <Text
+                                text={user?.username || 'інформація не вказана'}
+                            />
                         </HStack>
                         <HStack justify="center" gap="8" max>
-                            <Text title="age" />
-                            <Text title={user?.age || 'інформація не вказана'}  />
+                            <Text title="Вік" />
+                            <Text
+                                title={user?.age || 'інформація не вказана'}
+                            />
                         </HStack>
                         <HStack justify="center" gap="8" max>
-                            <Text title="first" />
-                            <Text title={user?.first || 'інформація не вказана'}  />
+                            <Text title="Ім'я" />
+                            <Text
+                                title={user?.first || 'інформація не вказана'}
+                            />
                         </HStack>
                         <HStack justify="center" gap="8" max>
-                            <Text title="last" />
-                            <Text title={user?.lastname || 'інформація не вказана'}  />
-                        </HStack>
-
-                        <HStack justify="center" gap="8" max>
-                            <Text title="City"  />
-                            <Text title={user?.city || 'інформація не вказана'} />
-                        </HStack>
-
-                        <HStack justify="center" gap="8" max>
-                            <Button onClick={()=>{
-                                if (!id) return
-                                if(!user?.isSubscribed) {
-                                    dispatch(subscribeToUser(id))
+                            <Text title="Прізвище" />
+                            <Text
+                                title={
+                                    user?.lastname || 'інформація не вказана'
                                 }
-                                else {
-                                    dispatch(unSubscribeToUser(id))
-                                }
-                            }
-                            }
-                            >{user?.isSubscribed ?'Відписатись' : 'Підписатись'}</Button>
-                            <Button onClick={()=>{
-                                navigate(`/users/${user?.id}/chat`)
-                            }}>Почати чат</Button>
-                            <Button onClick={()=>{
-                                dispatch(fetchRides(id|| ''))
-                                setIsPostsVisible(false)
+                            />
+                        </HStack>
 
-                            }}>Поїздки користувача</Button>
-                            <Button onClick={()=>{
-                                dispatch(fetchPosts(id|| ''))
-                                setIsPostsVisible(true)
-                            }}>Пости користувача</Button>
+                        <HStack justify="center" gap="8" max>
+                            <Text title="Місто" />
+                            <Text
+                                title={user?.city || 'інформація не вказана'}
+                            />
+                        </HStack>
+
+                        <HStack justify="center" gap="8" max>
+                            <Button
+                                onClick={() => {
+                                    if (!id) return;
+                                    if (!user?.isSubscribed) {
+                                        dispatch(subscribeToUser(id));
+                                    } else {
+                                        dispatch(unSubscribeToUser(id));
+                                    }
+                                }}
+                            >
+                                {user?.isSubscribed
+                                    ? 'Відписатись'
+                                    : 'Підписатись'}
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    navigate(`/users/${user?.id}/chat`);
+                                }}
+                            >
+                                Почати чат
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    dispatch(fetchRides(id || ''));
+                                    setIsPostsVisible(false);
+                                }}
+                            >
+                                Поїздки користувача
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    dispatch(fetchPosts(id || ''));
+                                    setIsPostsVisible(true);
+                                }}
+                            >
+                                Пости користувача
+                            </Button>
                         </HStack>
                     </VStack>
-                    {isPostsVisible && articles?.length && articles.map((u)=>{
-                        return (
-                            <ArticleListItem article={u} view={ArticleView.BIG}/>
-                        )
-                    })}
-                    { !isPostsVisible && rides?.length && rides.map((u)=>{
-                        return (
-                            <RideCard ride={u} view={ArticleView.BIG}/>
-                        )
-                    })}
+                    {isPostsVisible && articles?.length
+                        ? articles.map((u) => {
+                              return (
+                                  <ArticleListItem
+                                      article={u}
+                                      view={ArticleView.BIG}
+                                  />
+                              );
+                          })
+                        : isPostsVisible && (
+                              <div>У цього користувача ще немає постів</div>
+                          )}
+                    {!isPostsVisible && rides?.length ? (
+                        rides.map((u) => {
+                            return <RideCard ride={u} view={ArticleView.BIG} />;
+                        })
+                    ) : !isPostsVisible && (
+                        <div>У цього користувача ще немає поїздок</div>
+                    )}
                 </VStack>
-
             </Card>
         </DynamicModuleLoader>
-
     );
 });

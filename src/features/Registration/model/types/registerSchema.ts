@@ -4,4 +4,5 @@ export interface RegisterSchema {
     password: string;
     isLoading: boolean;
     error?: string;
+    role:string
 }
