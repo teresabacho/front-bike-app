@@ -119,3 +119,115 @@
     }
   }
 }
+
+.ArticleListItem {
+  transition: all 0.2s;
+}
+
+.card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.content {
+  width: 100%;
+}
+
+.title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.description {
+  color: var(--text-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 40px;
+}
+
+.details {
+  flex-wrap: wrap;
+}
+
+.detailItem {
+  color: var(--text-secondary);
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  color: var(--accent);
+  fill: var(--accent);
+}
+
+.bigIcon {
+  width: 24px;
+  height: 24px;
+  color: var(--accent);
+  fill: var(--accent);
+}
+
+.createdAt {
+  color: var(--text-disabled);
+  text-align: right;
+  width: 100%;
+}
+
+.price {
+  color: var(--success);
+  font-weight: 500;
+}
+
+.header {
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--light-bg);
+  width: 100%;
+}
+
+.mainInfo {
+  flex-wrap: wrap;
+}
+
+.infoBlock {
+  min-width: 180px;
+}
+
+.label {
+  color: var(--text-disabled);
+}
+
+.descriptionLabel {
+  color: var(--text-disabled);
+  margin-bottom: 4px;
+}
+
+.descriptionCard {
+  background-color: var(--light-bg);
+  width: 100%;
+}
+
+/* Стилі для різних видів карток */
+.SMALL {
+  .card {
+    padding: 16px;
+  }
+}
+
+.BIG {
+  width: 100%;
+
+  .card {
+    padding: 24px;
+  }
+}

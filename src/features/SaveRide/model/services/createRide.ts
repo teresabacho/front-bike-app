@@ -8,6 +8,10 @@ interface createRoadProps {
     roadId?:string,
     usersCount?:number,
     date?:string
+    isPaid?:boolean,
+    price?:number,
+    distance?:number,
+    duration?:number,
 }
 
 export const createRide = createAsyncThunk<

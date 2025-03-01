@@ -13,7 +13,7 @@ import { Input } from '@/shared/ui/redesigned/Input';
 import { Text } from '@/shared/ui/redesigned/Text';
 import { Button } from '@/shared/ui/redesigned/Button';
 import { createRide } from '../../model/services/createRide';
-import { VStack } from '@/shared/ui/redesigned/Stack';
+import { HStack, VStack } from '@/shared/ui/redesigned/Stack';
 import { getRouteMyRides } from '@/shared/const/router';
 
 const initialReducers: ReducersList = {
@@ -30,8 +30,8 @@ const SaveRide = () => {
     const title = useSelector((state:StateSchema) => state?.saveRideSchema?.title)
     const usersCount = useSelector((state:StateSchema) => state?.saveRideSchema?.usersCount)
     const date = useSelector((state:StateSchema) => state?.saveRideSchema?.date)
-
-
+    const [isPaid, setIsPaid] = React.useState(false);
+    const [price, setPrice] = React.useState(0);
 
     const buildRoute = useCallback( async ()=> {
         if (!window.google || !road) return;
@@ -58,7 +58,6 @@ const SaveRide = () => {
             buildRoute();
         }
     }, [isMapLoaded, road, buildRoute]);
-
 
     return (
         <DynamicModuleLoader removeAfterUnmount reducers={initialReducers}>
@@ -103,14 +102,33 @@ const SaveRide = () => {
                         )
                     }  />
                     <Text text="Дата заїзду" />
-                    <Input value={date} onChange={(e) =>
+                    <Input value={date} type={'datetime-local'} onChange={(e) =>
                         dispatch(saveRideActions.setDate(
                                 e
                             )
                         )
                     }  />
+                    {
+                       ( (localStorage.getItem('role') === 'trainer' && localStorage.getItem('isApproved') === 'true'  ) || localStorage.getItem('role') === 'admin') &&
+                        <HStack gap="8">
+                            <Text text="Платний" />
+                            <input type={'checkbox'} onChange={()=>{
+                                setIsPaid(!isPaid)
+                            }}/>
+                        </HStack>
+                    }
+                    {
+                        isPaid &&
+                        <Text text="Ціна" />
+                    }
+                    {
+                        isPaid &&
+                        <Input type={'number'} value={price} onChange={(e) =>
+                            setPrice(Number(e))
+                        }  />
+                    }
                     <Button onClick={()=>{
-                        dispatch(createRide({usersCount,description, title, roadId:id, date }))
+                        dispatch(createRide({usersCount,description, title, roadId:id, date, isPaid, price, distance: directions?.routes?.[0]?.legs?.[0]?.distance?.value, duration: directions?.routes?.[0]?.legs?.[0]?.duration?.value}))
                         navigate(getRouteMyRides())
                     }}>Save Ride</Button>
                 </VStack>
