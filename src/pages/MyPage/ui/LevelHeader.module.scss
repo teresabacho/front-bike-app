@@ -1,0 +1,26 @@
+
+.levelHeader {
+  width: 100%;
+}
+
+.progress {
+  width: 100%;
+  height: 8px;
+  margin: 4px 0;
+}
+
+.levelTitle {
+  font-weight: bold;
+}
+
+.xpText,
+.percentText {
+  color: var(--hint);
+}
+
+.maxLevel {
+  color: var(--accent);
+  font-weight: bold;
+  text-align: center;
+  padding: 4px 0;
+}
