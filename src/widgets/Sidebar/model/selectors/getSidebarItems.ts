@@ -12,9 +12,10 @@ import BikeIcon from '@/shared/assets/icons/bike-svgrepo-com.svg';
 
 import { SidebarItemType } from '../types/sidebar';
 import {
+    getAdminApprovals, getAdminReports,
     getRideCreate,
     getRouteArticles,
-    getRouteMain, getRouteMyProfile, getRouteMyRides, getRouterCreateRoad, getRouteUserLIst,
+    getRouteMain, getRouteMyProfile, getRouteMyRides, getRouterCreateRoad, getRouteUserLIst, getTrainerApprovals,
 } from '@/shared/const/router';
 
 export const useSidebarItems = () => {
@@ -35,6 +36,7 @@ export const useSidebarItems = () => {
                 text: 'Моя сторінка',
                 authOnly: true,
             },
+
             {
                 path: getRouteArticles(),
                 Icon: ArticleIcon,
@@ -65,9 +67,27 @@ export const useSidebarItems = () => {
                 text: 'Мої чати',
                 authOnly: true,
             },
-
         );
     }
-
+    if (localStorage.getItem('role') === 'admin') {
+        console.log('Admin role detected, adding admin sidebar item');
+       sidebarItemsList.push( {
+           path: getAdminApprovals(),
+           Icon: ProfileIcon,
+           text: 'Заявки на тренера',
+       })
+        sidebarItemsList.push( {
+            path: getAdminReports(),
+            Icon: ChatIcon,
+            text: 'Cкарги',
+        })
+    }
+    if (localStorage.getItem('role') === 'trainer') {
+        sidebarItemsList.push({
+            path: getTrainerApprovals(),
+            Icon: ProfileIcon,
+            text: 'Заявки на поїздки',
+        })
+    }
     return sidebarItemsList;
 };

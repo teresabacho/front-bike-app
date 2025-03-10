@@ -18,10 +18,15 @@ import { ArticleListItem, ArticleView } from '@/entities/Article';
 import { RideCard } from '@/pages/MyRides';
 import { fetchRides } from '../../model/services/fetchRides';
 import { fetchPosts } from '../../model/services/fetchPosts';
+import { AchievementsPage } from '@/pages/MyPage/achievmentsPage';
+import { checkAchievements } from '@/pages/MyPage/model/services/achievments.service';
+import { UserLevelProfile } from '@/pages/MyPage/ui/UserLevelProfile';
+import { UserApprovalStatus } from '@/pages/MyPage/ui/UserApprovalStatus';
 
 const initialReducers: ReducersList = {
     myPage: myPageReducer,
 };
+
 export const MyPage = memo(() => {
     const user = useSelector((state:StateSchema) => state?.myPage?.user)
     const dispatch = useAppDispatch()
@@ -31,17 +36,19 @@ export const MyPage = memo(() => {
     const[isPostsVisible, setIsPostsVisible] = useState(true)
 
     useEffect(() => {
-            dispatch(fetchUserData());
+        dispatch(fetchUserData());
+        dispatch(checkAchievements());
     },[dispatch]);
 
     useEffect(() => {
-
-            dispatch(fetchPosts());
-
+        dispatch(fetchPosts());
     },[dispatch]);
 
-    return (
+    const handleViewAchievements = () => {
+        navigate('/achievements');
+    };
 
+    return (
         <DynamicModuleLoader removeAfterUnmount reducers={initialReducers}>
             <Card
                 padding="24"
@@ -51,7 +58,7 @@ export const MyPage = memo(() => {
                     cls.SMALL,
                 ])}
             >
-                <VStack justify="center" align="center" gap="8" max>
+                <VStack justify="center" align="center" gap="16" max>
                     <AppImage
                         fallback={<Skeleton width="100%" height={250} />}
                         src={user?.avatar || "https://www.hundeo.com/wp-content/uploads/2019/05/Shiba-Inu-Profilbild.jpg"}
@@ -63,37 +70,37 @@ export const MyPage = memo(() => {
                             <Text text={user?.username || 'інформація не вказана'} />
                         </HStack>
                         <HStack justify="center" gap="8" max>
-                            <Text title="age" />
+                            <Text title="Вік" />
                             <Text title={user?.age || 'інформація не вказана'}  />
                         </HStack>
                         <HStack justify="center" gap="8" max>
-                            <Text title="first" />
+                            <Text title="Імʼя" />
                             <Text title={user?.first || 'інформація не вказана'}  />
                         </HStack>
                         <HStack justify="center" gap="8" max>
-                            <Text title="last" />
+                            <Text title="Прізвище" />
                             <Text title={user?.lastname || 'інформація не вказана'}  />
                         </HStack>
 
                         <HStack justify="center" gap="8" max>
-                            <Text title="City"  />
+                            <Text title="Місто"  />
                             <Text title={user?.city || 'інформація не вказана'} />
                         </HStack>
+
+                        {/* Компонент рівня користувача і місячних цілей */}
+                        <UserLevelProfile />
 
                         <HStack justify="center" gap="8" max>
                             <Button onClick={()=>{
                                 navigate(`/articles/new`)
                             }}>Створити пост</Button>
-                        </HStack>
-                        <Button onClick={()=>{
-                            dispatch(fetchRides())
-                            setIsPostsVisible(false)
 
-                        }}>Поїздки користувача</Button>
-                        <Button onClick={()=>{
-                            dispatch(fetchPosts())
-                            setIsPostsVisible(true)
-                        }}>Пости користувача</Button>
+                            {/* Кнопка для переходу на сторінку досягнень */}
+                        </HStack>
+                        <UserApprovalStatus></UserApprovalStatus>
+
+
+                        <AchievementsPage  ></AchievementsPage>
                         {isPostsVisible && articles?.length && articles.map((u)=>{
                             return (
                                 <ArticleListItem article={u} view={ArticleView.BIG}/>
@@ -105,6 +112,7 @@ export const MyPage = memo(() => {
                             )
                         })}
                     </VStack>
+
                 </VStack>
 
             </Card>

@@ -25,7 +25,13 @@ import {
     getRouterSaveRide,
     getRouteChat,
     getRouteMyRides,
-    getRouteUserLIst, getRouteUserDetails, getUserChat, getRouteRideDetails, getRouteMyProfile,
+    getRouteUserLIst,
+    getRouteUserDetails,
+    getUserChat,
+    getRouteRideDetails,
+    getRouteMyProfile,
+    getPayments,
+    getAdminApprovals, getTrainerApprovals, getAdminReports,
 } from '@/shared/const/router';
 import { AppRoutesProps } from '@/shared/types/router';
 import { SettingsPage } from '@/pages/SettingsPage';
@@ -39,6 +45,11 @@ import { UserDetailsPage } from '@/pages/UserDetailsPage';
 import { RideDetailsPage } from '@/pages/RideDetailsPage';
 import { MyProfilePage } from '@/pages/MyPage';
 import { CreateArticle } from '@/pages/ArticleCreatePage';
+import CheckoutForm from '@/pages/PaymentPage/ui/CheckoutForm';
+import CheckoutPage from '@/pages/PaymentPage/ui/CheckoutPage';
+import { AdminTrainerApprovalPage } from '@/pages/AdminTrainerApprovalPage/ui/AdminTrainerApprovalPage';
+import { TrainerApplicationsPage } from '@/pages/TrainerApprovalPage/ui/trainerApprovalPage';
+import { AdminReportsPage } from '@/pages/AdminReportsPage/AdminReportsPage';
 
 export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.MAIN]: {
@@ -109,7 +120,6 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
         path: getRouteRideDetails(':id'),
         element: <RideDetailsPage />,
     },
-    // last
     [AppRoutes.NOT_FOUND]: {
         path: '*',
         element: <NotFoundPage />,
@@ -134,4 +144,22 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
         path: getRouteMyRides(),
         element: <MyRides />,
     },
+    [AppRoutes.PAYMENTS]: {
+        path: getPayments(':id'),
+        element: <CheckoutPage />,
+    },
+    [AppRoutes.ADMIN_TRAINER_APPROVAL]: {
+        path: getAdminApprovals(),
+        element: <AdminTrainerApprovalPage />,
+    },
+    [AppRoutes.TRAINER_APPROVAL]: {
+        path: getTrainerApprovals(),
+        element: <TrainerApplicationsPage />,
+    },
+    [AppRoutes.ADMIN_REPORTS]: {
+        path: getAdminReports(),
+        element: <AdminReportsPage />,
+    }
+
+
 };
