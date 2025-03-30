@@ -1,0 +1,70 @@
+.achievementsPage {
+  padding: 20px;
+}
+
+.achievements {
+  width: 100%;
+}
+
+.achievementCard {
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  &.completed {
+    border-left: 4px solid var(--accent);
+  }
+}
+
+.achievementIcon {
+  border-radius: 50%;
+  object-fit: contain;
+  background: var(--bg-color);
+}
+
+.newBadge {
+  padding: 2px 8px;
+  background: var(--accent);
+  color: var(--primary-color);
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.completedBadge {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: var(--bg-color);
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.date {
+  color: var(--hint);
+  margin-top: 4px;
+}
+
+.progressBar {
+  width: 100%;
+  height: 8px;
+  margin: 4px 0;
+}
+
+.progressText {
+  color: var(--hint);
+}
+
+.percentText {
+  color: var(--hint);
+}
+
+.tabs {
+  margin-bottom: 10px;
+}

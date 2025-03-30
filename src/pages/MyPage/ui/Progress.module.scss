@@ -1,0 +1,28 @@
+.progress {
+  width: 100%;
+  background-color: var(--light-bg-redesigned);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+
+  &.low {
+    background-color: var(--cancel-redesigned);
+  }
+
+  &.medium {
+    background-color: var(--warning-redesigned);
+  }
+
+  &.high {
+    background-color: var(--save-redesigned);
+  }
+
+  &.complete {
+    background-color: var(--save-redesigned);
+  }
+}
