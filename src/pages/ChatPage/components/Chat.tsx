@@ -34,7 +34,6 @@ const Chat = (props:{isUserToUser?:boolean}) => {
   useEffect(() => {
     socket.emit("join", { room: id, name: userName, isUserToUser, userId });
 
-    // Cleanup function
     return () => {
       socket.off("join");
     };
@@ -50,7 +49,6 @@ const Chat = (props:{isUserToUser?:boolean}) => {
 
     socket.on("initMessages", handleInitMessages);
 
-    // Cleanup function
     return () => {
       socket.off("initMessages", handleInitMessages);
     };
@@ -63,7 +61,6 @@ const Chat = (props:{isUserToUser?:boolean}) => {
 
     socket.on("message", handleMessage);
 
-    // Cleanup function
     return () => {
       socket.off("message", handleMessage);
     };
@@ -76,7 +73,6 @@ const Chat = (props:{isUserToUser?:boolean}) => {
 
     socket.on("room", handleRoomUpdate);
 
-    // Cleanup function
     return () => {
       socket.off("room", handleRoomUpdate);
     };

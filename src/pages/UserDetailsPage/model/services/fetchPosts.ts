@@ -9,8 +9,7 @@ export const fetchPosts = createAsyncThunk<
 >('userDetails/fetchPosts', async (profileId, thunkApi) => {
     const { extra, rejectWithValue } = thunkApi;
 
-    try {
-        const response = await extra.api.get<UserListItem>(`articles/user-posts/${profileId}`);
+    try {        const response = await extra.api.get<UserListItem>(`articles/user-posts/${profileId}`);
 
         console.log(response.data);
 
@@ -19,6 +18,7 @@ export const fetchPosts = createAsyncThunk<
         }
 
         return response.data;
+
     } catch (e) {
         return rejectWithValue('error');
     }

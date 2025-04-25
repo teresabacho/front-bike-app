@@ -11,6 +11,7 @@ import { SortOrder } from '@/shared/types/sort';
 import { Input } from '@/shared/ui/redesigned/Input';
 import SearchIcon from '@/shared/assets/icons/search.svg';
 import { Icon } from '@/shared/ui/redesigned/Icon';
+import { Button } from '@/shared/ui/redesigned/Button';
 
 interface ArticlesFiltersProps {
     className?: string;
@@ -62,6 +63,15 @@ export const ArticlesFilters = memo((props: ArticlesFiltersProps) => {
                     onChangeOrder={onChangeOrder}
                     onChangeSort={onChangeSort}
                 />
+                {
+                    type === ArticleType.RIDES &&
+                    <Button onClick={() => {
+                        console.log('123');
+                        onChangeSearch('recommended');
+                    }} >
+                        Рекомендовані поїздки
+                    </Button>
+                }
             </VStack>
         </Card>
     );

@@ -39,6 +39,12 @@ export const RideCard = memo((props: {ride:{
                         <Text title="Дата" className={cls.title} />
                         <Text title={ride.date} className={cls.title} />
                     </HStack>
+                    {
+                        ride?.confidenceScore && <HStack className={cls.info} gap="4">
+                            <Text title="Упевненість:" className={cls.title} />
+                            <Text title={`${ride?.confidenceScore} %`} className={cls.title} />
+                        </HStack>
+                    }
                 </Card>
             </AppLink>
         );
@@ -66,6 +72,12 @@ export const RideCard = memo((props: {ride:{
                         <Text title="Date:" />
                         <Text title={ride.date || ''}  />
                     </HStack>
+                    {
+                        ride?.confidenceScore && <HStack className={cls.info} gap="4">
+                            <Text title="Упевненість:" className={cls.title} />
+                            <Text title={`${ride?.confidenceScore} %`} className={cls.title} />
+                        </HStack>
+                    }
                     <AppLink
                         to={getRouteRideDetails(ride.id || '')}
                     >
