@@ -37,10 +37,6 @@ const dispatch = useAppDispatch()
                     <Text text={author?.username} bold />
                     <Text text={createdAt} />
                 </HStack>
-                {canBeDeleted && <Button onClick={()=>{
-                    dispatch(deleteArticle(id))
-                    onEdit()
-                }}>{t('Видалити')}</Button>}
             </VStack>
         );
     },

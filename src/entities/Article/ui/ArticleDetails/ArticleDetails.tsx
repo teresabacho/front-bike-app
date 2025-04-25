@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import { memo, useEffect } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
     DynamicModuleLoader,
     ReducersList,
@@ -28,6 +29,11 @@ import {
 } from '../../model/selectors/articleDetails';
 import { renderArticleBlock } from './renderBlock';
 import { AppImage } from '@/shared/ui/redesigned/AppImage';
+import { $api } from '@/shared/api/api';
+import { getRouteArticles } from '@/shared/const/router';
+import { ReportButton } from '@/shared/lib/components/ReportModal/ReportButton';
+import { Button } from '@/shared/ui/redesigned/Button';
+import { getUserAuthData } from '@/entities/User';
 
 interface ArticleDetailsProps {
     className?: string;
@@ -37,7 +43,43 @@ interface ArticleDetailsProps {
 const reducers: ReducersList = {
     articleDetails: articleDetailsReducer,
 };
+export const usePermissions = () => {
+    const userData = useSelector(getUserAuthData);
+    const role = localStorage.getItem('role')
 
+    const isAdmin =role=== 'admin';
+    const isTrainer = role === 'trainer';
+    const isUser = role === 'user';
+
+    const canManageReports = isAdmin;
+    const canBanUsers = isAdmin;
+    const canDeleteAnyContent = isAdmin;
+
+    const canDeleteComment = (commentUserId: string) => {
+        return userData?.id === commentUserId || isAdmin;
+    };
+
+    const canDeleteArticle = (articleUserId: string) => {
+        return userData?.id === articleUserId || isAdmin;
+    };
+
+    const canReportContent = (contentUserId: string) => {
+        return userData && userData.id !== contentUserId;
+    };
+
+    return {
+        isAdmin,
+        isTrainer,
+        isUser,
+        canManageReports,
+        canBanUsers,
+        canDeleteAnyContent,
+        canDeleteComment,
+        canDeleteArticle,
+        canReportContent,
+        userData,
+    };
+};
 const Deprecated = () => {
     const article = useSelector(getArticleDetailsData);
     return (
@@ -64,12 +106,55 @@ const Deprecated = () => {
 
 const Redesigned = () => {
     const article = useSelector(getArticleDetailsData);
-    console.log(article);
+    const navigate = useNavigate();
+    const { canDeleteArticle } = usePermissions();
 
+    const handleDeleteArticle = useCallback(async () => {
+        if (!article?.id) return;
+
+        if (!confirm('Ви впевнені, що хочете видалити цю статтю?')) {
+            return;
+        }
+
+        try {
+            await $api.delete(`/articles/${article.id}`);
+            navigate(getRouteArticles());
+        } catch (error) {
+            console.error('Помилка при видаленні статті:', error);
+        }
+    }, [article?.id, navigate]);
     return (
         <>
             <Text title={article?.title} size="l" bold />
             <Text title={article?.subtitle} />
+            <HStack justify="between" align="start" max>
+                <VStack gap="8" max>
+                    <Text title={article?.title} size="l" bold />
+                    <Text title={article?.subtitle} />
+                </VStack>
+
+                {article && (
+                    <HStack gap="8">
+                        <ReportButton
+                            targetType="article"
+                            targetId={article.id}
+                            contentUserId={article.user?.id}
+                            contentPreview={article.title}
+                            variant="outline"
+                        />
+
+                        {canDeleteArticle(article.user?.id) && (
+                            <Button
+                                variant="outline"
+                                color="error"
+                                onClick={handleDeleteArticle}
+                            >
+                                Видалити
+                            </Button>
+                        )}
+                    </HStack>
+                )}
+            </HStack>
             <AppImage
                 fallback={
                     <SkeletonRedesigned
