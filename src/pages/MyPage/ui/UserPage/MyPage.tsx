@@ -22,6 +22,7 @@ import { AchievementsPage } from '@/pages/MyPage/achievmentsPage';
 import { checkAchievements } from '@/pages/MyPage/model/services/achievments.service';
 import { UserLevelProfile } from '@/pages/MyPage/ui/UserLevelProfile';
 import { UserApprovalStatus } from '@/pages/MyPage/ui/UserApprovalStatus';
+import { getMyBikes } from '@/shared/const/router';
 
 const initialReducers: ReducersList = {
     myPage: myPageReducer,
@@ -86,8 +87,10 @@ export const MyPage = memo(() => {
                             <Text title="Місто"  />
                             <Text title={user?.city || 'інформація не вказана'} />
                         </HStack>
+                        <Button onClick={()=>navigate(getMyBikes())} variant="outline" size="s">
+                            Мої Велосипеди
+                        </Button>
 
-                        {/* Компонент рівня користувача і місячних цілей */}
                         <UserLevelProfile />
 
                         <HStack justify="center" gap="8" max>
@@ -95,7 +98,6 @@ export const MyPage = memo(() => {
                                 navigate(`/articles/new`)
                             }}>Створити пост</Button>
 
-                            {/* Кнопка для переходу на сторінку досягнень */}
                         </HStack>
                         <UserApprovalStatus></UserApprovalStatus>
 
