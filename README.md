@@ -27,8 +27,7 @@
 ## Встановлення
 
 ```bash
-git clone https://github.com/your-username/velo-app-frontend.git
-cd velo-app-frontend
+git clone https://github.com/teresabacho/front-bike-app.git
 npm install
 npm run dev
 ```
